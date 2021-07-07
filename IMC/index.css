@@ -1,0 +1,21 @@
+body {
+    background-color: black;
+}
+
+#app {
+    border: 1px solid black;
+    text-align: center;
+    height: 400px;
+    width: 300px;
+    margin-left: 40%;
+    margin-top: 10%;
+    background-color: darkcyan;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+#botao {
+    background-color: cornflowerblue;
+    font-size: large;
+    height: 50px;
+    width: 300px;
+}
