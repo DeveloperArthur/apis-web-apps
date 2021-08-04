@@ -1,17 +1,21 @@
-function calculateImcAPI(person) {
-    var request = createRequest();
+function enviaParaBackend(jsonParaEnviar) {
+    console.log("passa por aqui primeiro");
+    var request = criaRequest();
 
-    request.onreadystatechange = handleImcCalculateResponse.bind(request)(function (calculatedPerson) {
-        person.imc = calculatedPerson.imc;
-        person.speak(parseFloat(person.imc).toFixed(2) + " " + translateImc(person.imc), document.getElementById("imc"))
+    request.onreadystatechange = handleResponse.bind(request)(function (jsonResponse) {
+        console.log("passa por aqui quinto (se der certo)");
+        jsonParaEnviar.nome = jsonResponse.nome;
+        jsonParaEnviar.idade = jsonResponse.idade;
     });
     
-    request.open('POST', 'http://localhost:8080/imc/calculate', true);
+    console.log("passa por aqui quarto");
+    request.open('POST', 'http://localhost:8080/endpoint', true);
     request.setRequestHeader('Content-type', 'application/json');
-    request.send(JSON.stringify({'height': person.height, 'weight': person.weight}));
+    request.send(JSON.stringify({'nome': jsonParaEnviar.nome, 'idade': jsonParaEnviar.idade}));
 }
 
-function createRequest() {
+function criaRequest() {
+    console.log("passa por aqui segundo");
     var request = null;
     try {
         request = new XMLHttpRequest();
@@ -30,7 +34,8 @@ function createRequest() {
     return request;
 }
 
-function handleImcCalculateResponse(callback) {
+function handleResponse(callback) {
+    console.log("passa por aqui terceiro");
     var self = this;
     return function() {
         if (self.readyState == 4) {
@@ -43,4 +48,3 @@ function handleImcCalculateResponse(callback) {
         }
     }
 }
-
